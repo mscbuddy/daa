@@ -1,0 +1,29 @@
+function index = binarySearch(arr, x)
+    low = 1;
+    high = length(arr);
+    while low <= high do
+        mid = round((low + high) / 2);
+        if arr(mid) == x then
+             index = mid;
+            return;
+        elseif arr(mid) < x then
+            low = mid + 1;
+        else
+            high = mid - 1;
+        end
+    end
+    index = -1;
+endfunction
+
+numbers = zeros(1, 5);
+for i = 1:5
+    numbers(i) = input("Enter number " + string(i) + ": ");
+end
+numbers = gsort(numbers, "g", "i");
+x = input("Enter number to find: ");
+index = binarySearch(numbers, x);
+if index == -1 then
+    disp("Number not found.");
+else
+    disp("Number found at position: " + string(index));
+end
