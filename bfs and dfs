@@ -1,0 +1,64 @@
+function components = bfs_connected_components(graph)
+    n = size(graph, 1);
+    visited = zeros(n, 1);
+    components = [];
+    
+    for i = 1:n
+        if visited(i) == 0 then
+            queue = [i];
+            component = [];
+            while size(queue, 1) > 0
+                node = queue(1);
+                queue(1) = [];
+                if visited(node) == 0 then
+                    visited(node) = 1;
+                    component = [component; node];
+                    for j = 1:n
+                        if graph(node, j) == 1 && visited(j) == 0 then
+                            queue = [queue; j];
+                        end
+                    end
+                end
+            end
+            components = [components; component'];
+        end
+    end
+endfunction
+
+graph = [0 1 0 0; 1 0 1 0; 0 1 0 1; 0 0 1 0];
+connected_components = bfs_connected_components(graph);
+disp(connected_components);
+``` ⬤
+
+function sorted = dfs_topological_sort(graph)
+    n = size(graph, 1);
+    visited = zeros(n, 1);
+    stack = [];
+    
+    function dfs(node)
+        visited(node) = 1;
+        for j = 1:n
+            if graph(node, j) == 1 && visited(j) == 0 then
+                dfs(j);
+            end
+        end
+        stack = [node; stack];
+    endfunction
+
+    for i = 1:n
+        if visited(i) == 0 then
+            dfs(i);
+        end
+    end
+    sorted = stack;
+endfunction
+
+graph = [0 1 0 0; 0 0 1 0; 0 0 0 1; 0 0 0 0];
+sorted_order = dfs_topological_sort(graph);
+disp(sorted_order);
+
+
+
+
+
+
