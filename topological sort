@@ -1,0 +1,38 @@
+function sorted = topological_sort(graph)
+    n = size(graph, 1);
+    in_degree = zeros(n, 1);
+    for i = 1:n
+        for j = 1:n
+            if graph(i, j) == 1 then
+                in_degree(j) = in_degree(j) + 1;
+            end
+        end
+    end
+    queue = [];
+    for i = 1:n
+        if in_degree(i) == 0 then
+            queue = [queue; i];
+        end
+    end
+    sorted = [];
+    while size(queue, 1) > 0
+        node = queue(1);
+        queue(1) = [];
+        sorted = [sorted; node];
+        for j = 1:n
+            if graph(node, j) == 1 then
+                in_degree(j) = in_degree(j) - 1;
+                if in_degree(j) == 0 then
+                    queue = [queue; j];
+                end
+            end
+        end
+    end
+    if size(sorted, 1) <> n then
+        sorted = [];
+    end
+endfunction
+
+graph = [0 1 0 0; 0 0 1 0; 0 0 0 1; 0 0 0 0];
+sorted_order = topological_sort(graph);
+disp(sorted_order);
