@@ -1,0 +1,19 @@
+A=[1,7,6,5,4,3,2]
+n=length(A)
+for i = 1:n-1
+    min_index = i;
+
+    for j = i+1:n
+        if A(j) < A(min_index) then
+            min_index = j;
+        end
+    end
+
+    if min_index <> i then
+        temp = A(i);
+        A(i) = A(min_index);
+        A(min_index) = temp;
+    end
+end
+disp(A)
+
